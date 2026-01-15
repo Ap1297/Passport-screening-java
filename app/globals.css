@@ -4,77 +4,84 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Updated color scheme for compliance/security focused design */
-  --background: oklch(0.98 0 0);
-  --foreground: oklch(0.15 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.15 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0 0);
-  --primary: oklch(0.35 0.1 240);
-  --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.95 0 0);
-  --secondary-foreground: oklch(0.2 0 0);
-  --muted: oklch(0.93 0 0);
-  --muted-foreground: oklch(0.5 0 0);
-  --accent: oklch(0.2 0.15 140);
-  --accent-foreground: oklch(0.98 0 0);
-  --destructive: oklch(0.58 0.25 27.3);
-  --destructive-foreground: oklch(0.98 0 0);
-  --success: oklch(0.6 0.2 140);
-  --border: oklch(0.92 0 0);
-  --input: oklch(0.96 0 0);
-  --ring: oklch(0.35 0.1 240);
-  --chart-1: oklch(0.35 0.1 240);
-  --chart-2: oklch(0.6 0.2 140);
-  --chart-3: oklch(0.58 0.25 27.3);
-  --chart-4: oklch(0.75 0.15 60);
-  --chart-5: oklch(0.55 0.12 200);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.98 0 0);
-  --sidebar-foreground: oklch(0.15 0 0);
-  --sidebar-primary: oklch(0.35 0.1 240);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.2 0.15 140);
-  --sidebar-accent-foreground: oklch(0.98 0 0);
-  --sidebar-border: oklch(0.92 0 0);
-  --sidebar-ring: oklch(0.35 0.1 240);
+  /* Futuristic dark theme with vibrant gradient accents inspired by modern compliance platforms */
+  --background: #0a0e27;
+  --foreground: #f5f7fc;
+  --card: #141829;
+  --card-foreground: #f5f7fc;
+  --popover: #141829;
+  --popover-foreground: #f5f7fc;
+  --primary: #3b82f6;
+  --primary-foreground: #f5f7fc;
+  --secondary: #06b6d4;
+  --secondary-foreground: #0a0e27;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --accent: #8b5cf6;
+  --accent-foreground: #f5f7fc;
+  --destructive: #ef4444;
+  --destructive-foreground: #f5f7fc;
+  --success: #10b981;
+  --border: #1e3a5f;
+  --input: #1a2847;
+  --ring: #3b82f6;
+  --gradient-start: #3b82f6;
+  --gradient-end: #8b5cf6;
+  --glow-primary: rgba(59, 130, 246, 0.5);
+  --chart-1: #3b82f6;
+  --chart-2: #10b981;
+  --chart-3: #ef4444;
+  --chart-4: #f59e0b;
+  --chart-5: #06b6d4;
+  --radius: 0.75rem;
+  --sidebar: #0f1529;
+  --sidebar-foreground: #f5f7fc;
+  --sidebar-primary: #3b82f6;
+  --sidebar-primary-foreground: #0a0e27;
+  --sidebar-accent: #8b5cf6;
+  --sidebar-accent-foreground: #f5f7fc;
+  --sidebar-border: #1e3a5f;
+  --sidebar-ring: #3b82f6;
 }
 
 .dark {
-  --background: oklch(0.12 0 0);
-  --foreground: oklch(0.95 0 0);
-  --card: oklch(0.18 0 0);
-  --card-foreground: oklch(0.95 0 0);
-  --popover: oklch(0.18 0 0);
-  --popover-foreground: oklch(0.95 0 0);
-  --primary: oklch(0.65 0.15 240);
-  --primary-foreground: oklch(0.12 0 0);
-  --secondary: oklch(0.25 0 0);
-  --secondary-foreground: oklch(0.95 0 0);
-  --muted: oklch(0.3 0 0);
-  --muted-foreground: oklch(0.7 0 0);
-  --accent: oklch(0.7 0.18 140);
-  --accent-foreground: oklch(0.12 0 0);
-  --destructive: oklch(0.65 0.25 27.3);
-  --destructive-foreground: oklch(0.95 0 0);
-  --success: oklch(0.75 0.25 140);
-  --border: oklch(0.25 0 0);
-  --input: oklch(0.22 0 0);
-  --ring: oklch(0.65 0.15 240);
-  --chart-1: oklch(0.65 0.15 240);
-  --chart-2: oklch(0.75 0.25 140);
-  --chart-3: oklch(0.65 0.25 27.3);
-  --chart-4: oklch(0.8 0.2 60);
-  --chart-5: oklch(0.7 0.18 200);
-  --sidebar: oklch(0.15 0 0);
-  --sidebar-foreground: oklch(0.95 0 0);
-  --sidebar-primary: oklch(0.65 0.15 240);
-  --sidebar-primary-foreground: oklch(0.95 0 0);
-  --sidebar-accent: oklch(0.7 0.18 140);
-  --sidebar-accent-foreground: oklch(0.12 0 0);
-  --sidebar-border: oklch(0.25 0 0);
-  --sidebar-ring: oklch(0.65 0.15 240);
+  /* Dark mode inherits the root theme which is already dark */
+  --background: #0a0e27;
+  --foreground: #f5f7fc;
+  --card: #141829;
+  --card-foreground: #f5f7fc;
+  --popover: #141829;
+  --popover-foreground: #f5f7fc;
+  --primary: #3b82f6;
+  --primary-foreground: #f5f7fc;
+  --secondary: #06b6d4;
+  --secondary-foreground: #0a0e27;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --accent: #8b5cf6;
+  --accent-foreground: #f5f7fc;
+  --destructive: #ef4444;
+  --destructive-foreground: #f5f7fc;
+  --success: #10b981;
+  --border: #1e3a5f;
+  --input: #1a2847;
+  --ring: #3b82f6;
+  --gradient-start: #3b82f6;
+  --gradient-end: #8b5cf6;
+  --glow-primary: rgba(59, 130, 246, 0.5);
+  --chart-1: #3b82f6;
+  --chart-2: #10b981;
+  --chart-3: #ef4444;
+  --chart-4: #f59e0b;
+  --chart-5: #06b6d4;
+  --sidebar: #0f1529;
+  --sidebar-foreground: #f5f7fc;
+  --sidebar-primary: #3b82f6;
+  --sidebar-primary-foreground: #0a0e27;
+  --sidebar-accent: #8b5cf6;
+  --sidebar-accent-foreground: #f5f7fc;
+  --sidebar-border: #1e3a5f;
+  --sidebar-ring: #3b82f6;
 }
 
 @theme inline {
@@ -118,11 +125,75 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* Added gradient and glassmorphism effects */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1529 100%);
+    min-height: 100vh;
+  }
+}
+
+/* Added custom animations and glassmorphism utilities */
+@layer components {
+  .glass {
+    @apply backdrop-blur-md bg-white/5 border border-white/10;
+  }
+
+  .glass-card {
+    @apply backdrop-blur-xl bg-slate-900/40 border border-slate-700/20 rounded-2xl shadow-2xl;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent;
+  }
+
+  .gradient-border {
+    @apply relative;
+  }
+
+  .gradient-border::before {
+    content: "";
+    @apply absolute inset-0 rounded-lg bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 opacity-20 blur-md -z-10;
+  }
+
+  .glow-primary {
+    @apply shadow-lg shadow-blue-500/20;
+  }
+
+  .glow-accent {
+    @apply shadow-lg shadow-purple-500/20;
+  }
+
+  .pulse-glow {
+    animation: pulse-glow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%,
+    100% {
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(139, 92, 246, 0.5);
+    }
+  }
+
+  .shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 3s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
   }
 }

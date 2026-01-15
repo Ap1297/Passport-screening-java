@@ -1,9 +1,8 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
-import { Upload, Loader2, AlertCircle, CheckCircle2 } from "lucide-react"
+import { Upload, Loader2, AlertCircle, Sparkles } from "lucide-react"
 
 interface ScreeningUploadProps {
   onScreeningComplete: (data: any) => void
@@ -80,87 +79,102 @@ export default function ScreeningUpload({ onScreeningComplete, onLoadingChange, 
 
   return (
     <div className="space-y-6">
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2">
         <div
-          className="rounded-lg border-2 border-dashed border-border bg-card p-8 text-center transition-colors"
+          className="relative group"
           onDragEnter={handleDrag}
           onDragLeave={handleDrag}
           onDragOver={handleDrag}
           onDrop={handleDrop}
-          style={{
-            borderColor: dragActive ? "var(--color-primary)" : "var(--color-border)",
-            backgroundColor: dragActive ? "var(--color-primary)" + "10" : "transparent",
-          }}
         >
-          <Upload className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-          <h3 className="text-lg font-semibold text-foreground mb-2">Upload Passport</h3>
-          <p className="text-sm text-muted-foreground mb-4">
-            Drag and drop your passport PDF or image here, or click to browse
-          </p>
+          {/* Gradient border effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 rounded-2xl opacity-0 group-hover:opacity-50 blur transition-all duration-300"></div>
 
-          <input
-            type="file"
-            onChange={handleChange}
-            disabled={loading}
-            id="file-input"
-            accept=".pdf,.jpg,.jpeg,.png"
-            className="hidden"
-          />
-
-          <button
-            onClick={() => document.getElementById("file-input")?.click()}
-            className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-2 text-sm font-medium text-primary-foreground hover:opacity-90 disabled:opacity-50 cursor-pointer"
-            disabled={loading}
+          <div
+            className={`relative rounded-2xl border-2 backdrop-blur-xl transition-all duration-300 p-8 text-center ${
+              dragActive
+                ? "border-blue-400 bg-blue-500/10 shadow-lg shadow-blue-500/20"
+                : "border-slate-700/50 bg-slate-900/50 hover:bg-slate-900/70 hover:border-slate-600"
+            }`}
           >
-            {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Upload className="mr-2 h-4 w-4" />}
-            Browse Files
-          </button>
+            <div className="flex justify-center mb-4">
+              <div className="p-3 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-blue-400/30">
+                <Upload className="h-10 w-10 text-blue-400" />
+              </div>
+            </div>
+            <h3 className="text-2xl font-bold text-white mb-2">Upload Passport</h3>
+            <p className="text-sm text-slate-400 mb-6">Drag and drop your passport PDF or image here</p>
+
+            <input
+              type="file"
+              onChange={handleChange}
+              disabled={loading}
+              id="file-input"
+              accept=".pdf,.jpg,.jpeg,.png"
+              className="hidden"
+            />
+
+            <button
+              onClick={() => document.getElementById("file-input")?.click()}
+              className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 px-8 py-3 text-sm font-semibold text-white hover:shadow-lg hover:shadow-blue-500/50 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 cursor-pointer transition-all duration-300 glow-primary"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Processing
+                </>
+              ) : (
+                <>
+                  <Upload className="mr-2 h-4 w-4" />
+                  Browse Files
+                </>
+              )}
+            </button>
+          </div>
         </div>
 
-        <div className="space-y-4 rounded-lg border border-border bg-card p-6">
-          <h3 className="text-lg font-semibold text-foreground">Screening Process</h3>
-          <div className="space-y-3">
-            <div className="flex items-start gap-3">
-              <CheckCircle2 className="h-5 w-5 text-success flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-medium text-foreground">OCR Extraction</p>
-                <p className="text-xs text-muted-foreground">Extract name from passport using advanced OCR</p>
+        <div className="glass-card p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <Sparkles className="h-5 w-5 text-cyan-400" />
+            <h3 className="text-xl font-bold text-white">Screening Process</h3>
+          </div>
+          <div className="space-y-4">
+            {[
+              { icon: "1", title: "OCR Extraction", desc: "Extract name from passport using advanced Tesseract OCR" },
+              { icon: "2", title: "Sanctions Check", desc: "Verify against UN consolidated sanctions list" },
+              { icon: "3", title: "Instant Results", desc: "Get detailed compliance screening results" },
+            ].map((step, idx) => (
+              <div key={idx} className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-purple-400/30 flex items-center justify-center">
+                  <span className="text-sm font-bold text-purple-400">{step.icon}</span>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-white">{step.title}</p>
+                  <p className="text-xs text-slate-400 mt-1">{step.desc}</p>
+                </div>
               </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle2 className="h-5 w-5 text-success flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-medium text-foreground">Sanctions Check</p>
-                <p className="text-xs text-muted-foreground">Verify against UN consolidated sanctions list</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle2 className="h-5 w-5 text-success flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-medium text-foreground">Instant Results</p>
-                <p className="text-xs text-muted-foreground">Get detailed compliance screening results</p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
 
       {error && (
-        <div className="flex gap-3 rounded-lg border border-destructive bg-destructive/10 p-4">
-          <AlertCircle className="h-5 w-5 text-destructive flex-shrink-0 mt-0.5" />
+        <div className="flex gap-3 rounded-xl border border-red-500/30 bg-red-500/10 p-4 backdrop-blur-md glow-primary">
+          <AlertCircle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
           <div>
-            <p className="text-sm font-medium text-destructive">Error</p>
-            <p className="text-xs text-destructive mt-1">{error}</p>
+            <p className="text-sm font-semibold text-red-400">Error</p>
+            <p className="text-xs text-red-300/80 mt-1">{error}</p>
           </div>
         </div>
       )}
 
       {loading && (
-        <div className="flex gap-3 rounded-lg border border-primary bg-primary/10 p-4">
-          <Loader2 className="h-5 w-5 text-primary animate-spin flex-shrink-0 mt-0.5" />
+        <div className="flex gap-3 rounded-xl border border-blue-500/30 bg-blue-500/10 p-4 backdrop-blur-md pulse-glow">
+          <Loader2 className="h-5 w-5 text-blue-400 animate-spin flex-shrink-0 mt-0.5" />
           <div>
-            <p className="text-sm font-medium text-primary">Processing</p>
-            <p className="text-xs text-muted-foreground mt-1">Extracting name and checking sanctions list...</p>
+            <p className="text-sm font-semibold text-blue-400">Processing Passport</p>
+            <p className="text-xs text-blue-300/80 mt-1">Extracting name and checking sanctions list...</p>
           </div>
         </div>
       )}
