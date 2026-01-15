@@ -25,23 +25,84 @@ public class SanctionsService {
             return new ScreeningCheckResult(false, new ArrayList<SanctionEntry>());
         }
 
-        String normalizedName = normalizeName(name);
-        List<SanctionedIndividual> matches = repository.findByNameContaining(normalizedName);
-
-        boolean isSanctioned = !matches.isEmpty();
-
+        String normalizedInput = normalizeName(name);
+        List<SanctionedIndividual> allIndividuals = repository.findAll();
+        
         List<SanctionEntry> entries = new ArrayList<>();
-        for (SanctionedIndividual individual : matches) {
-            entries.add(new SanctionEntry(individual.getName()));
+        for (SanctionedIndividual individual : allIndividuals) {
+            String coreName = extractCoreNameFromSanctionsEntry(individual.getName());
+            String normalizedDbName = normalizeName(coreName);
+            
+            if (matchesName(normalizedInput, normalizedDbName)) {
+                entries.add(new SanctionEntry(coreName.trim()));
+            }
         }
 
+        boolean isSanctioned = !entries.isEmpty();
         return new ScreeningCheckResult(isSanctioned, entries);
+    }
+
+    private String extractCoreNameFromSanctionsEntry(String fullEntry) {
+        // Extract only the main name before metadata markers like "na Name", "Title:", "Designation:", "DOB", etc.
+        if (fullEntry == null || fullEntry.isEmpty()) {
+            return fullEntry;
+        }
+        
+        // Split by common metadata markers
+        String[] markers = {" na Name", " Title:", " Designation:", " DOB:", " POB:", " a.k.a.:", " Nationality:", " Passport"};
+        String result = fullEntry;
+        
+        for (String marker : markers) {
+            int index = result.indexOf(marker);
+            if (index > 0) {
+                result = result.substring(0, index);
+            }
+        }
+        
+        return result.trim();
+    }
+
+    private boolean matchesName(String extractedName, String dbName) {
+        if (extractedName.equals(dbName)) {
+            return true;
+        }
+        
+        // Check if db name contains extracted name or vice versa (for partial matches)
+        if (dbName.contains(extractedName) || extractedName.contains(dbName)) {
+            return true;
+        }
+        
+        // For space-less names like "MUHAMMADHASSAN", check word-by-word matching
+        // Split db name into parts and check if most parts appear in extracted name
+        String[] dbParts = dbName.split("\\s+");
+        int matchedParts = 0;
+        
+        for (String part : dbParts) {
+            if (!part.isEmpty() && extractedName.contains(part)) {
+                matchedParts++;
+            }
+        }
+        
+        // If 50% or more of the db name parts match, consider it a match
+        if (dbParts.length > 0 && (double) matchedParts / dbParts.length >= 0.5) {
+            return true;
+        }
+        
+        // Check for substring match with minimum length threshold (at least 4 characters)
+        String[] extractedParts = extractedName.split("\\s+");
+        for (String part : extractedParts) {
+            if (part.length() >= 4 && dbName.contains(part)) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 
     private String normalizeName(String name) {
         return name
-            .toLowerCase()
-            .replaceAll("[^a-z0-9\\s]", "")
+            .toUpperCase()
+            .replaceAll("[^A-Z0-9]", "")
             .trim();
     }
 

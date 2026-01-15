@@ -108,7 +108,7 @@ public class OCRService {
         if (text == null || text.isEmpty()) return "";
         
         // 1. Try MRZ first
-        Matcher mrz = MRZ_PATTERN.matcher(text.replace(" ", " "));
+        Matcher mrz = MRZ_PATTERN.matcher(text.replace(" ", ""));
         if (mrz.find()) {
             return (mrz.group(2).replace("<", " ").trim() + " " + mrz.group(1).replace("<", "").trim()).toUpperCase();
         }
