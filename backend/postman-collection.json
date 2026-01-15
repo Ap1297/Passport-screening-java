@@ -1,0 +1,61 @@
+{
+  "info": {
+    "name": "Passport Screening API",
+    "description": "Collection for testing Passport Screening API endpoints",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/screening/health",
+          "host": ["{{base_url}}"],
+          "path": ["screening", "health"]
+        }
+      }
+    },
+    {
+      "name": "Screen Passport",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"file\": \"<base64_encoded_file>\",\n  \"fileName\": \"passport.pdf\",\n  \"fileType\": \"application/pdf\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/screening/check",
+          "host": ["{{base_url}}"],
+          "path": ["screening", "check"]
+        }
+      }
+    },
+    {
+      "name": "Manual Cache Refresh",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/screening/refresh",
+          "host": ["{{base_url}}"],
+          "path": ["screening", "refresh"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080/api",
+      "type": "string"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+D:\My Projects\Passport-screening-java\src\main\java\com\passport\screening\service\SanctionsService.java
+D:\My Projects\Passport-screening-java\src\main\java\com\passport\screening\repository\SanctionedIndividualRepository.java
+D:\My Projects\Passport-screening-java\src\main\java\com\passport\screening\config\CorsConfig.java
+D:\My Projects\Passport-screening-java\src\main\java\com\passport\screening\model\SanctionedIndividual.java
+D:\My Projects\Passport-screening-java\src\main\java\com\passport\screening\service\TikaOCRProvider.java
+D:\My Projects\Passport-screening-java\src\main\java\com\passport\screening\listener\ApplicationStartupListener.java
+D:\My Projects\Passport-screening-java\src\main\java\com\passport\screening\service\SanctionsListCacheService.java
+D:\My Projects\Passport-screening-java\src\main\java\com\passport\screening\model\CacheMetadata.java
+D:\My Projects\Passport-screening-java\src\main\java\com\passport\screening\service\OCRProvider.java
+D:\My Projects\Passport-screening-java\src\main\java\com\passport\screening\controller\ScreeningController.java
+D:\My Projects\Passport-screening-java\src\main\java\com\passport\screening\service\OCRService.java
+D:\My Projects\Passport-screening-java\src\main\java\com\passport\screening\model\ScreeningResult.java
+D:\My Projects\Passport-screening-java\src\main\java\com\passport\screening\PassportScreeningApplication.java
