@@ -1,16 +1,46 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import ScreeningUpload from "@/components/screening-upload"
 import ScreeningResults from "@/components/screening-results"
 import Header from "@/components/header"
+import { Loader2 } from "lucide-react"
 
 export default function Home() {
+  const router = useRouter()
   const [screeningData, setScreeningData] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [checkingAuth, setCheckingAuth] = useState(true)
 
-  const handleScreeningComplete = (data) => {
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+    if (!token) {
+      router.push("/login")
+    } else {
+      setIsAuthenticated(true)
+    }
+    setCheckingAuth(false)
+  }, [router])
+
+  const handleScreeningComplete = (data: any) => {
     setScreeningData(data)
+  }
+
+  if (checkingAuth) {
+    return (
+      <main className="min-h-screen bg-background flex items-center justify-center">
+        <div className="flex items-center gap-3 text-slate-400">
+          <Loader2 className="h-6 w-6 animate-spin" />
+          <span>Loading...</span>
+        </div>
+      </main>
+    )
+  }
+
+  if (!isAuthenticated) {
+    return null
   }
 
   return (
@@ -35,7 +65,7 @@ export default function Home() {
               onClick={() => setScreeningData(null)}
               className="inline-flex items-center justify-center rounded-lg bg-slate-800/50 border border-slate-700/50 px-4 py-2 text-sm font-medium text-slate-200 hover:bg-slate-700/50 hover:border-slate-600 transition-all duration-300"
             >
-              ← New Screening
+              New Screening
             </button>
             <ScreeningResults data={screeningData} />
           </div>

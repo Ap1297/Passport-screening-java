@@ -39,8 +39,13 @@ export default function ScreeningUpload({ onScreeningComplete, onLoadingChange, 
       const formData = new FormData()
       formData.append("file", file)
 
+      const token = localStorage.getItem("token")
+
       const response = await fetch("/api/screening", {
         method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
         body: formData,
       })
 

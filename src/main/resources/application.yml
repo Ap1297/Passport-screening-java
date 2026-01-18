@@ -24,6 +24,12 @@ logging:
     org.springframework.web: DEBUG
 
 app:
+  security:
+    jwt:
+      secret: ${JWT_SECRET:mySecretKeyForJWTTokenGenerationWhichShouldBeLongEnough123456}
+      expiration: 86400000
+    cors-origins: http://localhost:3000,http://localhost:8000
+  
   ocr:
     # IMPORTANT: Set this to your Tesseract tessdata directory
     # Windows: C:\Program Files\Tesseract-OCR\tessdata
@@ -52,5 +58,3 @@ app:
     cache-refresh-cron: "0 0 0 * * ?"
     source-url: https://scsanctions.un.org/consolidated
   
-  security:
-    cors-origins: http://localhost:3000,http://localhost:8000
