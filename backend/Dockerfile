@@ -26,4 +26,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
     CMD curl -f http://localhost:8080/api/screening/health || exit 1
 
 # Run application
-ENTRYPOINT ["java", "-Xms512m", "-Xmx2048m", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Xms256m", "-Xmx350m", "-jar", "app.jar"]
