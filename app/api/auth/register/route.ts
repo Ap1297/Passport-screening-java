@@ -1,12 +1,21 @@
 import { NextRequest, NextResponse } from "next/server"
 
-const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:8080"
+// Determine Backend URL based on Environment
+const isProduction = process.env.NODE_ENV === "production"
+
+// Priority: 1. Environment Variable -> 2. Production URL -> 3. Localhost
+const BACKEND_URL = process.env.BACKEND_URL || 
+  (isProduction 
+    ? "https://passport-screening-backend.onrender.com" 
+    : "http://localhost:8080")
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
 
-    const response = await fetch(`${BACKEND_URL}/api/auth/register`, {
+    console.log(`[Auth] Attempting login via: ${BACKEND_URL}/api/auth/login`);
+
+    const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -18,14 +27,14 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       return NextResponse.json(
-        { error: data.error || "Registration failed" },
+        { error: data.error || "Invalid credentials" },
         { status: response.status }
       )
     }
 
     return NextResponse.json(data)
   } catch (error) {
-    console.error("Registration error:", error)
+    console.error("Login error:", error)
     return NextResponse.json(
       { error: "Authentication service unavailable" },
       { status: 503 }

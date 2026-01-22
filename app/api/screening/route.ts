@@ -18,8 +18,16 @@ export const POST = async (request: NextRequest) => {
     const buffer = await file.arrayBuffer()
     const base64 = Buffer.from(buffer).toString("base64")
 
-    const backendUrl = process.env.SPRING_BOOT_API_URL || "http://localhost:8080/api/screening/check"
+    // Determine Backend URL based on Environment
+    const isProduction = process.env.NODE_ENV === "production"
+    
+    // Priority: 1. Environment Variable -> 2. Production URL -> 3. Localhost
+    const backendUrl = process.env.SPRING_BOOT_API_URL || 
+      (isProduction 
+        ? "https://passport-screening-backend.onrender.com/api/screening/check" 
+        : "http://localhost:8080/api/screening/check")
 
+    console.log("[v0] Environment:", process.env.NODE_ENV)
     console.log("[v0] Calling backend at:", backendUrl)
     console.log("[v0] File:", file.name, file.type, file.size)
 
@@ -50,12 +58,12 @@ export const POST = async (request: NextRequest) => {
       }
 
       const result = await backendResponse.json()
-      console.log("[v0] Backend response:", result) // Log the full response to verify data structure
+      console.log("[v0] Backend response:", result) 
       return NextResponse.json(result)
     } catch (backendError) {
       console.error("[v0] Backend call failed:", backendError)
 
-      // Fallback: Return mock data for development when backend is not available
+      // Fallback: Return mock data ONLY for development
       if (process.env.NODE_ENV === "development") {
         console.log("[v0] Backend not available, returning mock data for development")
         return NextResponse.json({
@@ -80,7 +88,7 @@ export const POST = async (request: NextRequest) => {
       {
         error: "Screening failed",
         details: errorMessage,
-        hint: "Make sure the Spring Boot backend is running at http://localhost:8080",
+        hint: "Make sure the Spring Boot backend is running",
       },
       { status: 500 },
     )
