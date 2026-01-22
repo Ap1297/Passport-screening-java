@@ -40,6 +40,7 @@ public class SecurityConfig {
             .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/screening/health").permitAll()
+                .antMatchers("/screening/check").permitAll()
                 .antMatchers("/debug/**").permitAll()
                 .anyRequest().authenticated()
             .and()

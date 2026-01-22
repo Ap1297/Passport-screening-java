@@ -125,7 +125,7 @@ public class OCRService {
         return "";
     }
 
-    private double calculateConfidence(String extractedName, String fullText) {
+    public double calculateConfidence(String extractedName, String fullText) {
         return (extractedName != null && !extractedName.isEmpty()) ? 0.85 : 0.3;
     }
 
