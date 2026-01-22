@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Copy JAR file
-COPY /target/passport-screening-1.0.0.jar app.jar
+COPY --from=build /target/passport-screening-1.0.0.jar app.jar
 
 # Set Tesseract environment
 ENV TESSDATA_PREFIX=/usr/share/tesseract-ocr/4.00/tessdata
