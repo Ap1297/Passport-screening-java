@@ -74,7 +74,7 @@ export const POST = async (request: NextRequest) => {
           matchedEntries: [],
           cacheLastUpdated: new Date().toISOString(),
           message:
-            "Mock data returned - Backend not running. Please start the Spring Boot backend at http://localhost:8080",
+            "Mock data returned - Backend not running. Please start the Spring Boot backend at http://localhost:10000",
         })
       }
 
