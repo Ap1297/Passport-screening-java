@@ -2,7 +2,7 @@
 
 # Test script for passport screening API
 
-API_URL="http://localhost:8080/api/screening"
+API_URL="http://localhost:10000/api/screening"
 
 echo "Testing Passport Screening API..."
 echo ""

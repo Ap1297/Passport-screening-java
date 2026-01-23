@@ -25,7 +25,7 @@ export const POST = async (request: NextRequest) => {
     const backendUrl = process.env.SPRING_BOOT_API_URL || 
       (isProduction 
         ? "https://passport-screening-backend.onrender.com/api/screening/check" 
-        : "http://localhost:8080/api/screening/check")
+        : "http://localhost:10000/api/screening/check")
 
     console.log("[v0] Environment:", process.env.NODE_ENV)
     console.log("[v0] Calling backend at:", backendUrl)
