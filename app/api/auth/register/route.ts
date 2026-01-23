@@ -13,9 +13,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
 
-    console.log(`[Auth] Attempting login via: ${BACKEND_URL}/api/auth/login`);
-
-    const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
+    const response = await fetch(`${BACKEND_URL}/api/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -27,14 +25,14 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       return NextResponse.json(
-        { error: data.error || "Invalid credentials" },
+        { error: data.error || "Registration failed" },
         { status: response.status }
       )
     }
 
     return NextResponse.json(data)
   } catch (error) {
-    console.error("Login error:", error)
+    console.error("Registration error:", error)
     return NextResponse.json(
       { error: "Authentication service unavailable" },
       { status: 503 }
