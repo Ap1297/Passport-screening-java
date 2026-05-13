@@ -2,14 +2,15 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
+import { ThemeProvider } from "@/components/theme-provider"
 import "./globals.css"
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Passport Screening System",
-  description: "Advanced identity verification against international sanctions lists with OCR technology",
+  title: "SanctionScreen Pro - Third-Party Sanctions Compliance Tool",
+  description: "Third-party identity verification tool powered by UN Security Council Consolidated List from official United Nations sources",
   generator: "v0.app",
   icons: {
     icon: [
@@ -36,9 +37,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={`font-sans antialiased`}>
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className={`font-sans antialiased bg-background`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange={false}
+        >
+          {children}
+        </ThemeProvider>
         <Analytics />
       </body>
     </html>
