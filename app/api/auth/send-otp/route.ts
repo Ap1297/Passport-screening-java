@@ -12,11 +12,9 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
 
-    const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
+    const response = await fetch(`${BACKEND_URL}/auth/send-otp`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     })
 
@@ -24,17 +22,17 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       return NextResponse.json(
-        { error: data.error || "Invalid credentials" },
+        { error: data.error || "Failed to send OTP" },
         { status: response.status }
       )
     }
 
     return NextResponse.json(data)
   } catch (error) {
-    console.error("Login error:", error)
+    console.error("Send OTP error:", error)
     return NextResponse.json(
-      { error: "Authentication service unavailable" },
-      { status: 503 }
+      { error: "Failed to send OTP. Please try again." },
+      { status: 500 }
     )
   }
 }

@@ -7,7 +7,7 @@ const isProduction = process.env.NODE_ENV === "production"
 const BACKEND_URL = process.env.BACKEND_URL || 
   (isProduction 
     ? "https://passport-screening-backend.onrender.com" 
-    : "http://localhost:10000")
+    : "http://localhost:8080")
 
 export async function POST(request: NextRequest) {
   try {

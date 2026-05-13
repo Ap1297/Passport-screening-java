@@ -2,7 +2,7 @@
 
 import type React from "react"
 import { useState } from "react"
-import { Upload, Loader2, AlertCircle, Sparkles } from "lucide-react"
+import { Upload, Loader2, AlertCircle, FileCheck, Scan, ShieldCheck, Search } from "lucide-react"
 
 interface ScreeningUploadProps {
   onScreeningComplete: (data: any) => void
@@ -13,7 +13,6 @@ interface ScreeningUploadProps {
 export default function ScreeningUpload({ onScreeningComplete, onLoadingChange, loading }: ScreeningUploadProps) {
   const [dragActive, setDragActive] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState(false)
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault()
@@ -32,7 +31,6 @@ export default function ScreeningUpload({ onScreeningComplete, onLoadingChange, 
     }
 
     setError(null)
-    setSuccess(true)
     onLoadingChange(true)
 
     try {
@@ -55,10 +53,8 @@ export default function ScreeningUpload({ onScreeningComplete, onLoadingChange, 
 
       const data = await response.json()
       onScreeningComplete(data)
-      setSuccess(false)
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred")
-      setSuccess(false)
     } finally {
       onLoadingChange(false)
     }
@@ -83,32 +79,42 @@ export default function ScreeningUpload({ onScreeningComplete, onLoadingChange, 
   }
 
   return (
-    <div className="space-y-6">
-      <div className="grid gap-6 md:grid-cols-2">
+    <div className="space-y-8">
+      {/* Page Title */}
+      <div className="text-center">
+        <h2 className="text-3xl font-bold text-foreground mb-2">Passport Screening</h2>
+        <p className="text-muted-foreground text-sm">Upload a passport document to verify against UN Security Council sanctions compliance lists</p>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-5">
+        {/* Upload Area */}
         <div
-          className="relative group"
+          className="lg:col-span-3 relative group"
           onDragEnter={handleDrag}
           onDragLeave={handleDrag}
           onDragOver={handleDrag}
           onDrop={handleDrop}
         >
-          {/* Gradient border effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 rounded-2xl opacity-0 group-hover:opacity-50 blur transition-all duration-300"></div>
-
           <div
-            className={`relative rounded-2xl border-2 backdrop-blur-xl transition-all duration-300 p-8 text-center ${
+            className={`relative rounded-2xl border-2 border-dashed backdrop-blur-xl transition-all duration-300 p-10 text-center ${
               dragActive
-                ? "border-blue-400 bg-blue-500/10 shadow-lg shadow-blue-500/20"
-                : "border-slate-700/50 bg-slate-900/50 hover:bg-slate-900/70 hover:border-slate-600"
+                ? "border-amber-500 bg-amber-500/5 glow-gold"
+                : "border-border bg-card hover:bg-amber-500/5 hover:border-amber-500/50"
             }`}
           >
-            <div className="flex justify-center mb-4">
-              <div className="p-3 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-blue-400/30">
-                <Upload className="h-10 w-10 text-blue-400" />
+            <div className="flex justify-center mb-6">
+              <div className={`p-5 rounded-2xl transition-all duration-300 ${
+                dragActive 
+                  ? "bg-gradient-to-br from-amber-500 to-amber-600 text-white shadow-lg shadow-amber-500/25" 
+                  : "bg-amber-500/10 border border-amber-500/20"
+              }`}>
+                <Upload className={`h-12 w-12 transition-colors ${dragActive ? "" : "text-amber-600 dark:text-amber-400"}`} />
               </div>
             </div>
-            <h3 className="text-2xl font-bold text-white mb-2">Upload Passport</h3>
-            <p className="text-sm text-slate-400 mb-6">Drag and drop your passport PDF or image here</p>
+            
+            <h3 className="text-2xl font-bold text-foreground mb-2">Upload Passport Document</h3>
+            <p className="text-sm text-muted-foreground mb-2">Drag and drop your passport PDF or image file</p>
+            <p className="text-xs text-muted-foreground mb-6">Supported formats: PDF, JPG, PNG</p>
 
             <input
               type="file"
@@ -121,17 +127,17 @@ export default function ScreeningUpload({ onScreeningComplete, onLoadingChange, 
 
             <button
               onClick={() => document.getElementById("file-input")?.click()}
-              className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 px-8 py-3 text-sm font-semibold text-white hover:shadow-lg hover:shadow-blue-500/50 hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 cursor-pointer transition-all duration-300 glow-primary"
+              className="btn-primary inline-flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={loading}
             >
               {loading ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Processing
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                  Processing Document...
                 </>
               ) : (
                 <>
-                  <Upload className="mr-2 h-4 w-4" />
+                  <Upload className="h-5 w-5" />
                   Browse Files
                 </>
               )}
@@ -139,47 +145,85 @@ export default function ScreeningUpload({ onScreeningComplete, onLoadingChange, 
           </div>
         </div>
 
-        <div className="glass-card p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <Sparkles className="h-5 w-5 text-cyan-400" />
-            <h3 className="text-xl font-bold text-white">Screening Process</h3>
+        {/* Process Steps */}
+        <div className="lg:col-span-2 glass-card-elevated p-6">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-2 rounded-lg bg-green-500/10 border border-green-500/20">
+              <ShieldCheck className="h-5 w-5 text-green-600 dark:text-green-400" />
+            </div>
+            <h3 className="text-lg font-bold text-foreground">Verification Process</h3>
           </div>
-          <div className="space-y-4">
+          
+          <div className="space-y-5">
             {[
-              { icon: "1", title: "OCR Extraction", desc: "Extract name from passport using advanced Tesseract OCR" },
-              { icon: "2", title: "Sanctions Check", desc: "Verify against UN consolidated sanctions list" },
-              { icon: "3", title: "Instant Results", desc: "Get detailed compliance screening results" },
+              { 
+                icon: <Scan className="h-5 w-5" />, 
+                title: "Document OCR", 
+                desc: "Advanced text extraction from passport using Tesseract OCR engine",
+              },
+              { 
+                icon: <Search className="h-5 w-5" />, 
+                title: "UN SC Consolidated List", 
+                desc: "Data validated against UN Security Council Consolidated List from official United Nations website",
+              },
+              { 
+                icon: <FileCheck className="h-5 w-5" />, 
+                title: "Compliance Report", 
+                desc: "Detailed screening results with match confidence scores",
+              },
             ].map((step, idx) => (
-              <div key={idx} className="flex items-start gap-3">
-                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-purple-400/30 flex items-center justify-center">
-                  <span className="text-sm font-bold text-purple-400">{step.icon}</span>
+              <div key={idx} className="flex items-start gap-4">
+                <div className="flex-shrink-0 p-2.5 rounded-xl bg-secondary border border-border text-muted-foreground">
+                  {step.icon}
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-white">{step.title}</p>
-                  <p className="text-xs text-slate-400 mt-1">{step.desc}</p>
+                  <p className="text-sm font-semibold text-foreground">{step.title}</p>
+                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{step.desc}</p>
                 </div>
               </div>
             ))}
           </div>
+
+          <div className="mt-6 pt-6 border-t border-border">
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              <div className="status-dot status-active"></div>
+              <span>UN SC Consolidated List (un.org) synced</span>
+            </div>
+          </div>
         </div>
       </div>
 
+      {/* Error Message */}
       {error && (
-        <div className="flex gap-3 rounded-xl border border-red-500/30 bg-red-500/10 p-4 backdrop-blur-md glow-primary">
-          <AlertCircle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
+        <div className="flex gap-4 rounded-xl border border-red-500/20 bg-red-500/10 p-5 backdrop-blur-md glow-danger">
+          <AlertCircle className="h-6 w-6 text-red-600 dark:text-red-400 flex-shrink-0" />
           <div>
-            <p className="text-sm font-semibold text-red-400">Error</p>
-            <p className="text-xs text-red-300/80 mt-1">{error}</p>
+            <p className="text-sm font-semibold text-red-600 dark:text-red-400">Screening Error</p>
+            <p className="text-sm text-red-700/80 dark:text-red-300/80 mt-1">{error}</p>
           </div>
         </div>
       )}
 
+      {/* Loading State */}
       {loading && (
-        <div className="flex gap-3 rounded-xl border border-blue-500/30 bg-blue-500/10 p-4 backdrop-blur-md pulse-glow">
-          <Loader2 className="h-5 w-5 text-blue-400 animate-spin flex-shrink-0 mt-0.5" />
-          <div>
-            <p className="text-sm font-semibold text-blue-400">Processing Passport</p>
-            <p className="text-xs text-blue-300/80 mt-1">Extracting name and checking sanctions list...</p>
+        <div className="glass-card-elevated p-6 animated-border">
+          <div className="flex items-center gap-4">
+            <div className="p-3 rounded-xl bg-primary text-primary-foreground">
+              <Loader2 className="h-6 w-6 animate-spin" />
+            </div>
+            <div className="flex-1">
+              <p className="text-base font-semibold text-foreground">Processing Document</p>
+              <p className="text-sm text-muted-foreground mt-1">Extracting passport data and verifying against sanctions database...</p>
+            </div>
+            <div className="badge-secondary">
+              <Scan className="h-3 w-3 mr-1" />
+              Scanning
+            </div>
+          </div>
+          
+          {/* Progress bar animation */}
+          <div className="mt-4 h-1.5 bg-secondary rounded-full overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-foreground to-muted-foreground rounded-full shimmer" style={{ width: '60%' }}></div>
           </div>
         </div>
       )}

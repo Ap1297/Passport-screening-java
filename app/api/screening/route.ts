@@ -23,7 +23,7 @@ export const POST = async (request: NextRequest) => {
     const baseUrl = process.env.SPRING_BOOT_API_URL || 
       (isProduction 
         ? "https://passport-screening-backend.onrender.com" 
-        : "http://localhost:10000")
+        : "http://localhost:8080")
 
     // 2. Construct the Full Endpoint URL
     // We remove any trailing slash from baseUrl to avoid double slashes //
@@ -33,25 +33,26 @@ export const POST = async (request: NextRequest) => {
     console.log("[v0] Environment:", process.env.NODE_ENV)
     console.log("[v0] Base URL:", cleanBaseUrl)
     console.log("[v0] Full Backend URL:", backendUrl)
+    console.log("[v0] Calling backend at:", backendUrl)
+    console.log("[v0] File:", file.name, file.type, file.size)
+
+    // Get the authorization header from the request
+    const authHeader = request.headers.get("Authorization")
 
     try {
-      const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 30000) 
-
+      // Try to call Spring Boot backend
       const backendResponse = await fetch(backendUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          ...(authHeader ? { "Authorization": authHeader } : {}),
         },
         body: JSON.stringify({
           file: base64,
           fileName: file.name,
           fileType: file.type,
         }),
-        signal: controller.signal,
       })
-
-      clearTimeout(timeoutId)
 
       if (!backendResponse.ok) {
         const errorText = await backendResponse.text()
@@ -60,28 +61,39 @@ export const POST = async (request: NextRequest) => {
       }
 
       const result = await backendResponse.json()
+      console.log("[v0] Backend response:", result) // Log the full response to verify data structure
       return NextResponse.json(result)
     } catch (backendError) {
       console.error("[v0] Backend call failed:", backendError)
 
-      // Fallback: Mock data ONLY in development
+      // Fallback: Return mock data for development when backend is not available
       if (process.env.NODE_ENV === "development") {
+        console.log("[v0] Backend not available, returning mock data for development")
         return NextResponse.json({
           success: true,
           extractedName: "JOHN DOE",
           confidence: 0.92,
           sanctioned: false,
           matchedEntries: [],
-          message: "Mock data - Backend not running",
+          cacheLastUpdated: new Date().toISOString(),
+          message:
+            "Mock data returned - Backend not running. Please start the Spring Boot backend at http://localhost:8080",
         })
       }
+
       throw backendError
     }
   } catch (error) {
     console.error("[v0] Screening error:", error)
+    const errorMessage = error instanceof Error ? error.message : "Unknown error occurred"
+
     return NextResponse.json(
-      { error: "Screening failed", details: error instanceof Error ? error.message : "Unknown error" },
-      { status: 500 }
+      {
+        error: "Screening failed",
+        details: errorMessage,
+        hint: "Make sure the Spring Boot backend is running at http://localhost:8080",
+      },
+      { status: 500 },
     )
   }
 }
