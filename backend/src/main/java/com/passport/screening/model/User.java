@@ -28,6 +28,10 @@ public class User {
     
     private LocalDateTime lastLogin;
 
+    private String provider; // "local", "google", etc.
+    
+    private String providerId; // Google sub claim or other provider ID
+
     public User() {
         this.createdDate = LocalDateTime.now();
         this.enabled = true;
@@ -103,5 +107,21 @@ public class User {
 
     public void setLastLogin(LocalDateTime lastLogin) {
         this.lastLogin = lastLogin;
+    }
+
+    public String getProvider() {
+        return provider;
+    }
+
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
+
+    public String getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(String providerId) {
+        this.providerId = providerId;
     }
 }

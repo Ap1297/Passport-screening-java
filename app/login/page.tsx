@@ -29,6 +29,8 @@ import {
   Award
 } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { GoogleLoginButton } from "@/components/google-login-button"
+import { GoogleOAuthProvider } from "@react-oauth/google"
 
 type ViewType = "login" | "register" | "forgotPassword" | "verifyOtp" | "resetPassword"
 
@@ -716,7 +718,22 @@ export default function LoginPage() {
                         </button>
                       </form>
 
-                      <div className="mt-8 pt-6 border-t border-border/50 text-center">
+                      <div className="mt-8 pt-6 border-t border-border/50">
+                        <p className="text-muted-foreground text-sm text-center mb-4">Or continue with</p>
+                        <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}>
+                          <GoogleLoginButton
+                            onSuccess={(token) => {
+                              router.push("/")
+                            }}
+                            onError={(error) => {
+                              setError("Google login failed. Please try again.")
+                            }}
+                            loading={loading}
+                          />
+                        </GoogleOAuthProvider>
+                      </div>
+
+                      <div className="mt-6 pt-6 border-t border-border/50 text-center">
                         <p className="text-muted-foreground text-sm">
                           {"Don't have an account?"}{" "}
                           <button
@@ -831,7 +848,22 @@ export default function LoginPage() {
                         </button>
                       </form>
 
-                      <div className="mt-6 pt-4 border-t border-border/50 text-center">
+                      <div className="mt-6 pt-4 border-t border-border/50">
+                        <p className="text-muted-foreground text-sm text-center mb-4">Or sign up with</p>
+                        <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}>
+                          <GoogleLoginButton
+                            onSuccess={(token) => {
+                              router.push("/")
+                            }}
+                            onError={(error) => {
+                              setError("Google registration failed. Please try again.")
+                            }}
+                            loading={loading}
+                          />
+                        </GoogleOAuthProvider>
+                      </div>
+
+                      <div className="mt-6 pt-6 border-t border-border/50 text-center">
                         <p className="text-muted-foreground text-sm">
                           Already have an account?{" "}
                           <button onClick={() => resetView("login")} className="text-amber-600 dark:text-amber-400 font-semibold">
