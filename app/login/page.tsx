@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
+import { AnimatedParticles } from "@/components/animated-particles"
 import { 
   ShieldCheck, 
   Eye, 
@@ -311,24 +312,7 @@ export default function LoginPage() {
         />
 
         {/* Floating particles */}
-        <div className="absolute inset-0">
-          {[...Array(30)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute rounded-full"
-              style={{
-                width: `${2 + Math.random() * 4}px`,
-                height: `${2 + Math.random() * 4}px`,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                background: `rgba(251, 191, 36, ${0.2 + Math.random() * 0.4})`,
-                boxShadow: '0 0 10px rgba(251, 191, 36, 0.3)',
-                animation: `floatParticle ${10 + Math.random() * 20}s ease-in-out infinite`,
-                animationDelay: `${Math.random() * 10}s`
-              }}
-            />
-          ))}
-        </div>
+        <AnimatedParticles />
 
         {/* Animated grid lines */}
         <div 
@@ -403,12 +387,6 @@ export default function LoginPage() {
         @keyframes morphBlob3 {
           0%, 100% { transform: translate(-50%, 0) scale(1); }
           50% { transform: translate(-50%, -10%) scale(1.1); }
-        }
-        @keyframes floatParticle {
-          0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
-          25% { transform: translateY(-40px) translateX(20px); opacity: 0.8; }
-          50% { transform: translateY(-20px) translateX(-10px); opacity: 0.5; }
-          75% { transform: translateY(-60px) translateX(10px); opacity: 0.7; }
         }
         @keyframes gridMove {
           0% { transform: translate(0, 0); }
