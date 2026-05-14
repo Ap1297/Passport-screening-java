@@ -673,24 +673,24 @@ export default function LoginPage() {
                         <button
                           type="submit"
                           disabled={loading}
-                          className="relative w-full py-4 rounded-xl font-semibold text-white overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
+                         className="relative w-full py-3 sm:py-4 rounded-lg sm:rounded-xl font-semibold text-white group disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
                         >
-                          <div className="absolute inset-0 bg-gradient-to-r from-amber-500 via-amber-600 to-orange-500"></div>
-                          <div className="absolute inset-0 bg-gradient-to-r from-amber-600 via-orange-500 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                          <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity" style={{ background: 'radial-gradient(circle at 50% 50%, white, transparent 60%)' }}></div>
-                          <span className="relative flex items-center justify-center gap-2">
+                          <div className="absolute inset-0 bg-gradient-to-r from-amber-500 via-amber-600 to-orange-500 rounded-lg sm:rounded-xl"></div>
+                          <div className="absolute inset-0 bg-gradient-to-r from-amber-600 via-orange-500 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg sm:rounded-xl"></div>
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg sm:rounded-xl"></div>
+                          <span className="relative flex items-center justify-center gap-1.5 sm:gap-2 px-2">
                             {loading ? (
                               <>
-                                <Loader2 className="h-5 w-5 animate-spin" />
-                                Signing in...
+                                <Loader2 className="h-4 w-4 sm:h-5 sm:w-5 animate-spin flex-shrink-0" />
+                                <span className="hidden sm:inline">Signing in...</span>
+                                <span className="sm:hidden">Signing...</span>
                               </>
                             ) : (
                               <>
-                                <ShieldCheck className="h-5 w-5" />
-                                Sign In
-                                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                              </>
+                                <ShieldCheck className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
+                                <span>Sign In</span>
+                                <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />
+                                </>
                             )}
                           </span>
                         </button>
