@@ -31,9 +31,9 @@ export default function LegitimacyBanner() {
   ]
 
   return (
-    <div className="mb-8">
+    <div className="mb-4">
       {/* Main Legitimacy Header */}
-      <div className="relative overflow-hidden rounded-2xl bg-card border border-border p-6 mb-6 legitimacy-glow">
+      <div className="relative overflow-hidden rounded-2xl bg-card border border-border p-4 mb-3 legitimacy-glow">
         <div className="absolute inset-0 bg-grid-pattern opacity-50"></div>
         <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 dark:bg-amber-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
         
@@ -88,7 +88,7 @@ export default function LegitimacyBanner() {
       </div>
 
       {/* Trust Points Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
         {trustPoints.map((point, idx) => (
           <div 
             key={idx} 

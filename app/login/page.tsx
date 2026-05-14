@@ -29,6 +29,8 @@ import {
   Award
 } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { GoogleLoginButton } from "@/components/google-login-button"
+import { GoogleOAuthProvider } from "@react-oauth/google"
 
 type ViewType = "login" | "register" | "forgotPassword" | "verifyOtp" | "resetPassword"
 
@@ -428,7 +430,7 @@ export default function LoginPage() {
 
       {/* Header */}
       <header className="relative z-20 border-b border-border/50 bg-background/70 backdrop-blur-2xl">
-        <div className="container mx-auto max-w-7xl px-4 sm:px-6 py-4">
+        <div className="container mx-auto max-w-7xl px-4 sm:px-6 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="relative group">
@@ -462,11 +464,11 @@ export default function LoginPage() {
       </header>
 
       {/* Main Content */}
-      <div className="relative z-10 container mx-auto max-w-7xl px-4 sm:px-6 py-8 lg:py-12">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-20 items-center min-h-[calc(100vh-180px)]">
+      <div className="relative z-10 container mx-auto max-w-7xl px-4 sm:px-6 py-4 lg:py-6">
+        <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center min-h-[calc(100vh-180px)]">
           
           {/* Left Side - Hero Content */}
-          <div className="hidden lg:flex flex-col justify-center space-y-8">
+          <div className="hidden lg:flex flex-col justify-center space-y-5">
             {/* Badge */}
             <div className="inline-flex self-start items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-yellow-500/15 border border-amber-500/30 backdrop-blur-sm shadow-lg shadow-amber-500/5">
               <Sparkles className="h-4 w-4 text-amber-500" />
@@ -474,31 +476,31 @@ export default function LoginPage() {
             </div>
 
             {/* Main Heading */}
-            <div className="space-y-4">
+            <div className="space-y-2">
               <h2 className="text-5xl xl:text-6xl font-bold leading-[1.1] tracking-tight">
                 <span className="text-foreground">Sanctions Screening</span>
                 <br />
                 <span className="gradient-gold-text">Made Simple</span>
               </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed max-w-lg">
+              <p className="text-base text-muted-foreground leading-relaxed max-w-lg">
                 Third-party compliance tool powered by official UN Security Council Consolidated List. 
                 Fast, accurate, and reliable identity verification for your business.
               </p>
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-4 gap-3">
+            <div className="grid grid-cols-4 gap-2">
               {stats.map((stat, idx) => (
                 <div 
                   key={idx} 
-                  className="group relative p-4 rounded-2xl bg-card/60 border border-border/50 backdrop-blur-sm hover:bg-card/90 hover:border-amber-500/30 hover:shadow-xl hover:shadow-amber-500/10 transition-all duration-300 cursor-default"
+                  className="group relative p-3 rounded-lg bg-card/60 border border-border/50 backdrop-blur-sm hover:bg-card/90 hover:border-amber-500/30 hover:shadow-lg hover:shadow-amber-500/10 transition-all duration-300 cursor-default"
                 >
                   <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   <div className="relative">
-                    <div className="flex items-center gap-1.5 mb-1 text-muted-foreground group-hover:text-amber-500 transition-colors">
+                    <div className="flex items-center gap-1 mb-1 text-muted-foreground group-hover:text-amber-500 transition-colors">
                       {stat.icon}
                     </div>
-                    <div className="text-2xl font-bold text-foreground group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">{stat.value}</div>
+                    <div className="text-lg font-bold text-foreground group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">{stat.value}</div>
                     <div className="text-xs text-muted-foreground">{stat.label}</div>
                   </div>
                 </div>
@@ -568,7 +570,7 @@ export default function LoginPage() {
           <div className="w-full max-w-md mx-auto lg:mx-0 lg:ml-auto">
             {/* Success Message */}
             {successMessage && (
-              <div className="mb-6 p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 backdrop-blur-sm flex items-start gap-3">
+                      <div className="mb-4 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 backdrop-blur-sm flex items-start gap-2">
                 <div className="p-1 rounded-full bg-emerald-500/20">
                   <CheckCircle className="h-4 w-4 text-emerald-500" />
                 </div>
@@ -603,26 +605,26 @@ export default function LoginPage() {
                   />
                 </div>
 
-                <div className="relative p-8">
+                <div className="relative p-6">
                   {/* Login View */}
                   {view === "login" && (
                     <>
-                      <div className="text-center mb-8">
-                        <div className="relative inline-flex mb-5">
-                          <div className="absolute -inset-3 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl blur-xl opacity-50"></div>
+                      <div className="text-center mb-6">
+                        <div className="relative inline-flex mb-3">
+                          <div className="absolute -inset-3 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl blur-lg opacity-50"></div>
                           <div 
-                            className="relative p-5 rounded-2xl bg-gradient-to-br from-amber-500 via-amber-600 to-orange-600 text-white shadow-2xl"
+                            className="relative p-3 rounded-xl bg-gradient-to-br from-amber-500 via-amber-600 to-orange-600 text-white shadow-lg"
                             style={{ animation: 'pulseGlow 3s ease-in-out infinite' }}
                           >
-                            <Fingerprint className="h-10 w-10" />
+                            <Fingerprint className="h-7 w-7" />
                           </div>
                         </div>
-                        <h2 className="text-2xl font-bold text-foreground mb-2">Welcome Back</h2>
-                        <p className="text-muted-foreground text-sm">Sign in to access the screening portal</p>
+                        <h2 className="text-lg font-bold text-foreground mb-1">Welcome Back</h2>
+                        <p className="text-muted-foreground text-xs">Sign in to access the screening portal</p>
                       </div>
 
                       {error && (
-                        <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center gap-3">
+                        <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center gap-2">
                           <div className="p-1 rounded-full bg-red-500/20">
                             <svg className="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -632,7 +634,7 @@ export default function LoginPage() {
                         </div>
                       )}
 
-                      <form onSubmit={handleLogin} className="space-y-5">
+                      <form onSubmit={handleLogin} className="space-y-3">
                         <div className="space-y-2">
                           <label className="block text-sm font-medium text-foreground">Username</label>
                           <div className="relative group">
@@ -716,7 +718,22 @@ export default function LoginPage() {
                         </button>
                       </form>
 
-                      <div className="mt-8 pt-6 border-t border-border/50 text-center">
+                      <div className="mt-8 pt-6 border-t border-border/50">
+                        <p className="text-muted-foreground text-sm text-center mb-4">Or continue with</p>
+                        <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}>
+                          <GoogleLoginButton
+                            onSuccess={(token) => {
+                              router.push("/")
+                            }}
+                            onError={(error) => {
+                              setError("Google login failed. Please try again.")
+                            }}
+                            loading={loading}
+                          />
+                        </GoogleOAuthProvider>
+                      </div>
+
+                      <div className="mt-6 pt-6 border-t border-border/50 text-center">
                         <p className="text-muted-foreground text-sm">
                           {"Don't have an account?"}{" "}
                           <button
@@ -733,8 +750,8 @@ export default function LoginPage() {
                   {/* Register View */}
                   {view === "register" && (
                     <>
-                      <div className="text-center mb-6">
-                        <div className="relative inline-flex mb-4">
+                      <div className="text-center mb-4">
+                        <div className="relative inline-flex mb-2">
                           <div className="absolute -inset-2 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl blur-lg opacity-50"></div>
                           <div className="relative p-4 rounded-2xl bg-gradient-to-br from-amber-500 via-amber-600 to-orange-600 text-white shadow-xl">
                             <User className="h-8 w-8" />
@@ -750,7 +767,7 @@ export default function LoginPage() {
                         </div>
                       )}
 
-                      <form onSubmit={handleRegister} className="space-y-4">
+                      <form onSubmit={handleRegister} className="space-y-3">
                         <div className="space-y-1.5">
                           <label className="block text-sm font-medium text-foreground">Username</label>
                           <div className="relative">
@@ -831,7 +848,22 @@ export default function LoginPage() {
                         </button>
                       </form>
 
-                      <div className="mt-6 pt-4 border-t border-border/50 text-center">
+                      <div className="mt-6 pt-4 border-t border-border/50">
+                        <p className="text-muted-foreground text-sm text-center mb-4">Or sign up with</p>
+                        <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}>
+                          <GoogleLoginButton
+                            onSuccess={(token) => {
+                              router.push("/")
+                            }}
+                            onError={(error) => {
+                              setError("Google registration failed. Please try again.")
+                            }}
+                            loading={loading}
+                          />
+                        </GoogleOAuthProvider>
+                      </div>
+
+                      <div className="mt-6 pt-6 border-t border-border/50 text-center">
                         <p className="text-muted-foreground text-sm">
                           Already have an account?{" "}
                           <button onClick={() => resetView("login")} className="text-amber-600 dark:text-amber-400 font-semibold">
@@ -845,7 +877,7 @@ export default function LoginPage() {
                   {/* Forgot Password View */}
                   {view === "forgotPassword" && (
                     <>
-                      <div className="text-center mb-6">
+                      <div className="text-center mb-4">
                         <div className="relative inline-flex mb-4">
                           <div className="absolute -inset-2 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl blur-lg opacity-50"></div>
                           <div className="relative p-4 rounded-2xl bg-gradient-to-br from-amber-500 via-amber-600 to-orange-600 text-white shadow-xl">
@@ -862,7 +894,7 @@ export default function LoginPage() {
                         </div>
                       )}
 
-                      <form onSubmit={handleSendOtp} className="space-y-5">
+                      <form onSubmit={handleSendOtp} className="space-y-3">
                         <div className="space-y-2">
                           <label className="block text-sm font-medium text-foreground">Mobile Number</label>
                           <div className="relative">
@@ -905,7 +937,7 @@ export default function LoginPage() {
                   {/* Verify OTP View */}
                   {view === "verifyOtp" && (
                     <>
-                      <div className="text-center mb-6">
+                      <div className="text-center mb-4">
                         <div className="relative inline-flex mb-4">
                           <div className="absolute -inset-2 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl blur-lg opacity-50"></div>
                           <div className="relative p-4 rounded-2xl bg-gradient-to-br from-amber-500 via-amber-600 to-orange-600 text-white shadow-xl">
@@ -922,7 +954,7 @@ export default function LoginPage() {
                         </div>
                       )}
 
-                      <form onSubmit={handleVerifyOtp} className="space-y-5">
+                      <form onSubmit={handleVerifyOtp} className="space-y-3">
                         <div className="space-y-2">
                           <label className="block text-sm font-medium text-foreground">OTP Code</label>
                           <input
@@ -963,7 +995,7 @@ export default function LoginPage() {
                   {/* Reset Password View */}
                   {view === "resetPassword" && (
                     <>
-                      <div className="text-center mb-6">
+                      <div className="text-center mb-4">
                         <div className="relative inline-flex mb-4">
                           <div className="absolute -inset-2 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl blur-lg opacity-50"></div>
                           <div className="relative p-4 rounded-2xl bg-gradient-to-br from-amber-500 via-amber-600 to-orange-600 text-white shadow-xl">
@@ -980,7 +1012,7 @@ export default function LoginPage() {
                         </div>
                       )}
 
-                      <form onSubmit={handleResetPassword} className="space-y-4">
+                      <form onSubmit={handleResetPassword} className="space-y-3">
                         <div className="space-y-2">
                           <label className="block text-sm font-medium text-foreground">New Password</label>
                           <div className="relative">

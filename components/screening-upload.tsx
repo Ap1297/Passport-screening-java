@@ -79,14 +79,14 @@ export default function ScreeningUpload({ onScreeningComplete, onLoadingChange, 
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4">
       {/* Page Title */}
-      <div className="text-center">
+      <div className="text-center mb-4">
         <h2 className="text-3xl font-bold text-foreground mb-2">Passport Screening</h2>
         <p className="text-muted-foreground text-sm">Upload a passport document to verify against UN Security Council sanctions compliance lists</p>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-5">
+      <div className="grid gap-4 lg:grid-cols-5">
         {/* Upload Area */}
         <div
           className="lg:col-span-3 relative group"
